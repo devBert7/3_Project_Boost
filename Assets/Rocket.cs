@@ -5,7 +5,7 @@ using UnityEngine;
 public class Rocket : MonoBehaviour {
 	// Expose to inspector without allowing change in other scripts.. (use [SerializeField] rather than public)
 	[SerializeField] float rcsThrust = 250f;
-	[SerializeField] float mainThrust = 25f;
+	[SerializeField] float mainThrust = 20f;
 
 	// Access inspector components
 	Rigidbody rigidbody;
