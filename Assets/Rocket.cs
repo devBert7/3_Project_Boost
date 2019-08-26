@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Rocket : MonoBehaviour {
+	// Expose to inspector without allowing change in other scripts.. (use [SerializeField] rather than public)
+	[SerializeField] float rcsThrust = 250f;
+	[SerializeField] float mainThrust = 25f;
+
+	// Access inspector components
 	Rigidbody rigidbody;
 	AudioSource audioSource;
 
@@ -14,22 +19,31 @@ public class Rocket : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update()	{
-		ProcessInput();
+		Thrust();
+		Rotate();
 	}
 
-	private void ProcessInput() {
+	void Thrust() {
 		if (Input.GetKey(KeyCode.Space)) {
-			rigidbody.AddRelativeForce(Vector3.up);
+			rigidbody.AddRelativeForce(Vector3.up * mainThrust);
 			if (!audioSource.isPlaying) {
 				audioSource.Play();
 				}
 		} else {
 			audioSource.Stop();
 		}
+	}
+
+	void Rotate() {
+		rigidbody.freezeRotation = true; // Take control of rotation manually
+		float rotationThisFrame = rcsThrust * Time.deltaTime;
+
 		if (Input.GetKey(KeyCode.A)) {
-			transform.Rotate(Vector3.forward);
+			transform.Rotate(Vector3.forward * rotationThisFrame);
 		} else if (Input.GetKey(KeyCode.D)) {
-			transform.Rotate(-Vector3.forward);
+			transform.Rotate(-Vector3.forward * rotationThisFrame);
 		}
+
+		rigidbody.freezeRotation = false; // Resume physics control of rotation
 	}
 }
