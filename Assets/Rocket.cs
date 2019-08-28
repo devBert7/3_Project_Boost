@@ -11,6 +11,7 @@ public class Rocket : MonoBehaviour {
 	[SerializeField] ParticleSystem engineParticles;
 	[SerializeField] ParticleSystem victoryParticles;
 	[SerializeField] ParticleSystem explosionParticles;
+	[SerializeField] float levelLoadDelay = 2f;
 
 	// Access inspector components
 	Rigidbody rigidbody;
@@ -56,7 +57,7 @@ public class Rocket : MonoBehaviour {
 		audioSource.Stop();
 		audioSource.PlayOneShot(victory);
 		victoryParticles.Play();
-		Invoke("Transcending", 1f);
+		Invoke("Transcending", levelLoadDelay);
 	}
 
 	void DeathSequence() {
@@ -64,7 +65,7 @@ public class Rocket : MonoBehaviour {
 		audioSource.Stop();
 		audioSource.PlayOneShot(explosion);
 		explosionParticles.Play();
-		Invoke("Dying", 1f);
+		Invoke("Dying", levelLoadDelay);
 	}
 
 	void ThrustResponse() {
